@@ -10,6 +10,7 @@
 #include <memory>
 #include "../util/definition.h"
 #include "../json/json.h"
+#include "../executorCtl.h"
 #include "command.h"
 #include "commandStartDefect.h"
 #include "commandStopDefect.h"
@@ -21,9 +22,10 @@ class CommandFactory
 {
 private:
     static CommandFactory*  pInstance;
-    CommandFactory(){};
+    shared_ptr<ExecutorCtl> apExecCtl;
+    CommandFactory(ExecutorCtl* exCtl);
 public:
-    static CommandFactory* instance();
+    static CommandFactory* instance(ExecutorCtl* exCtl);
     Command* buildCommand(Json::Value command);
 };
 #endif //EXECUTOR_COMMANDFACTORY_H

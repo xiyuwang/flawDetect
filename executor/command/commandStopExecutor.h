@@ -9,6 +9,7 @@
 
 class CommandStopExecutor: public Command
 {
-
+public:
+    CommandStopExecutor(ExecutorCtl* exCtl);
 };
 #endif //EXECUTOR_COMMANDSTOPEXECUTOR_H

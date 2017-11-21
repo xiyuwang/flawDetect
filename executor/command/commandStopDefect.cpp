@@ -3,3 +3,7 @@
 //
 
 #include "commandStopDefect.h"
+
+CommandStopDefect::CommandStopDefect(ExecutorCtl* exCtl):Command(exCtl)
+{
+}

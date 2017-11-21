@@ -9,6 +9,7 @@
 
 class CommandStopDefect: public Command
 {
-
+public:
+    CommandStopDefect(ExecutorCtl* exCtl);
 };
 #endif //EXECUTOR_COMMANDSTOPDEFECT_H

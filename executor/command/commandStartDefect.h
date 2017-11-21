@@ -10,6 +10,6 @@
 class CommandStartDefect: public Command
 {
 public:
-
+    CommandStartDefect(ExecutorCtl* exCtl);
 };
 #endif //EXECUTOR_COMMANDSTARTDEFECT_H
