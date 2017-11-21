@@ -49,14 +49,14 @@ private:
     bool started;
     string handleCommand(string command);
 public:
-    map<string, Executor*> executorMap;
+    map<string, shared_ptr<Executor>> execMap;
 
     ExecutorCtl();
     ~ExecutorCtl();
     void startServer();
     R_Result stopServer();
-    map<string, Executor*>& getExecutorMap(){ return executorMap;};
-    Executor* getExecutor(string key){ return executorMap[key];};
+    map<string, shared_ptr<Executor>>& getExecutorMap(){ return execMap;};
+    Executor* getExecutor(string key){ return execMap[key].get();};
 };
 
 #endif //EXECUTOR_EXECUTORCTL_H

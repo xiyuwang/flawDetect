@@ -34,13 +34,13 @@ string ExecutorCtl::handleCommand(string command)
     {
         return "{\"code\":2}";
     }
-    CommandFactory* pFactary = CommandFactory::instance();
+    CommandFactory* pFactary = CommandFactory::instance(this);
     shared_ptr<Command> pCommand(pFactary->buildCommand(jsonRoot));
     if(pCommand==NULL)
     {
         return "{\"code\":3}";
     }
-    R_Result ret = pCommand->execute(this,jsonRoot);
+    R_Result ret = pCommand->execute(jsonRoot);
 
     if(ret != R_Success)
     {

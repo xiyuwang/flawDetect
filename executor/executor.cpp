@@ -28,10 +28,10 @@ R_Result Executor::setState(eStates st)
     return R_Success;
 }
 
-R_Result Executor::addProduct(Product *pObj)
+R_Result Executor::addProduct(shared_ptr<Product> pObj)
 {
     try {
-        productMap.insert(pair<string, Product*>(pObj->name,pObj));
+        productMap.insert(pair<string, shared_ptr<Product>>(pObj->name,pObj));
     }
     catch (exception ex){
         return R_Fail;

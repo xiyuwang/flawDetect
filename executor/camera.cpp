@@ -3,3 +3,8 @@
 //
 
 #include "camera.h"
+
+Camera::Camera(string name)
+{
+    this->name = name;
+}

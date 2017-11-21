@@ -12,7 +12,7 @@ using namespace std;
 class Camera
 {
 public:
-    string id;
-
+    string name;
+    Camera(string name);
 };
 #endif //EXECUTOR_CAMERA_H

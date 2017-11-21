@@ -22,7 +22,7 @@ class Executor
 {
 private:
     string exName;
-    map<string, Product*> productMap;
+    map<string, shared_ptr<Product>> productMap;
     Schedule* pSchedule;
     vector<Frame> frames;
     enum eStates state;
@@ -35,7 +35,7 @@ public:
     eStates getState();
     R_Result setState(eStates state);
 
-    R_Result addProduct(Product *pObj);
+    R_Result addProduct(shared_ptr<Product> pObj);
     R_Result deleteProduct(const string id);
 };
 #endif //EXECUTOR_EXECUTOR_H
