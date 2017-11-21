@@ -26,3 +26,4 @@ typedef int R_Result;
 #define COMMAND_TAG_NAME ("name")
 #define COMMAND_TAG_PROPRODUCTS ("products")
 #define COMMAND_TAG_PROCESSORS ("processors")
+#define COMMAND_TAG_CAMERA ("camera")
