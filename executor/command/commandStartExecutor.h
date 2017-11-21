@@ -17,12 +17,13 @@ public:
     Json::Value jsonRoot;
     string extrName;
     vector<shared_ptr<Product>> productVec;
+    CommandStartExecutor(ExecutorCtl* exCtl);
     R_Result build(Json::Value& root);
-    R_Result execute(ExecutorCtl* exeCtl, Json::Value& root);
+    R_Result execute(Json::Value& root);
 private:
-    ExecutorCtl* exeCtl;
     Executor* pExecutor;
     Product* buildProduct(Json::Value& product);
     Processor* buildProcessor(Json::Value& processor);
+    Camera* buildCamera(Json::Value& camera);
 };
 #endif //EXECUTOR_COMMANDSTARTEXECUTOR_H

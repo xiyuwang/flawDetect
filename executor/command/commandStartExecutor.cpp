@@ -3,7 +3,9 @@
 //
 
 #include "commandStartExecutor.h"
-
+CommandStartExecutor::CommandStartExecutor(ExecutorCtl* exCtl):Command(exCtl)
+{
+}
 R_Result CommandStartExecutor::build(Json::Value& root)
 {
     jsonRoot.copy(root);
@@ -24,7 +26,8 @@ R_Result CommandStartExecutor::build(Json::Value& root)
     {
         Product* pProd = buildProduct(*sub);
         if(pProd == NULL)  return R_Fail_Executor_Build_Mistake;
-        pExecutor->addProduct(pProd);
+        shared_ptr<Product> apProd(pProd);
+        pExecutor->addProduct(apProd);
     }
 
 
@@ -37,23 +40,47 @@ Product* CommandStartExecutor::buildProduct(Json::Value& product)
         return NULL;
     }
 
-    if(!jsonRoot.isMember(COMMAND_TAG_PROCESSORS) || jsonRoot[COMMAND_TAG_PROCESSORS].type() != Json::arrayValue)
+    if(!product.isMember(COMMAND_TAG_PROCESSORS) || product[COMMAND_TAG_PROCESSORS].type() != Json::arrayValue)
     {
         return NULL;
     }
 
-    string name  = product[COMMAND_TAG_NAME].asString();
-    Product* pProduct = new Product(name);
-
-    Json::Value jsonProcessors = jsonRoot[COMMAND_TAG_PROPRODUCTS];
-    for (auto sub= jsonProcessors.begin(); sub != jsonProcessors.end(); sub++)
+    if(!product.isMember(COMMAND_TAG_CAMERA) || product[COMMAND_TAG_CAMERA].type() != Json::objectValue)
     {
-        Processor* pProcessor = buildProcessor(*sub);
-        if(pProcessor == NULL)  return NULL;
-        pProduct->addProcessor(pProcessor);
+        return NULL;
     }
 
-    return pProduct;
+    // create product instance
+    string name  = product[COMMAND_TAG_NAME].asString();
+    shared_ptr<Product> apProd(new Product(name));
+
+    // create camera
+    Camera* pCamera = buildCamera(product[COMMAND_TAG_CAMERA]);
+    if(pCamera == NULL) return NULL;
+    apProd->setCamera(shared_ptr<Camera>(pCamera));
+    // create processor
+    Json::Value jsonProcessors = product[COMMAND_TAG_PROPRODUCTS];
+    for (auto sub= jsonProcessors.begin(); sub != jsonProcessors.end(); sub++)
+    {
+        Processor* pProc = buildProcessor(*sub);
+        if(pProc == NULL)  return NULL;
+        shared_ptr<Processor> apProc(pProc);
+        apProd->addProcessor(apProc);
+    }
+
+    return apProd.get();
+}
+Camera* CommandStartExecutor::buildCamera(Json::Value& camera)
+{
+    if(!camera.isMember(COMMAND_TAG_NAME) || camera[COMMAND_TAG_NAME].type() != Json::stringValue)
+    {
+        return NULL;
+    }
+
+    string name  = camera[COMMAND_TAG_NAME].asString();
+    Camera* pCamera = new Camera(name);
+    shared_ptr<Camera> ppCamera(pCamera);
+    return ppCamera.get();
 }
 Processor* CommandStartExecutor::buildProcessor(Json::Value& processor)
 {
@@ -63,14 +90,14 @@ Processor* CommandStartExecutor::buildProcessor(Json::Value& processor)
     }
 
     string name  = processor[COMMAND_TAG_NAME].asString();
-    Processor* pProcessor = new Processor(name);
-
+    shared_ptr<Processor> apProc(new Processor(name));
+    return apProc.get();
 }
-R_Result CommandStartExecutor::execute(ExecutorCtl* exeCtl,Json::Value& root)
+R_Result CommandStartExecutor::execute(Json::Value& root)
 {
     build(root);
     Json::Value exName = jsonRoot["name"];
-    pExecutor = new Executor(exName.asString());
-    exeCtl->getExecutorMap().insert(pair<string,Executor*>(exName.asString(),pExecutor));
+    shared_ptr<Executor> apExec(new Executor(exName.asString()));
+    execCtl->getExecutorMap().insert(pair<string,shared_ptr<Executor>>(exName.asString(),apExec));
     return R_Success;
 }

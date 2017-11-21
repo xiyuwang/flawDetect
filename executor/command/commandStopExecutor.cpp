@@ -3,3 +3,7 @@
 //
 
 #include "commandStopExecutor.h"
+
+CommandStopExecutor::CommandStopExecutor(ExecutorCtl* exCtl):Command(exCtl)
+{
+}

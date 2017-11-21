@@ -5,6 +5,7 @@
 #ifndef EXECUTOR_COMMAND_H
 #define EXECUTOR_COMMAND_H
 #include <iostream>
+#include <memory>
 #include <vector>
 #include "../util/definition.h"
 #include "../json/json.h"
@@ -15,6 +16,8 @@ class Command
 {
 public:
     unsigned int code;
-    virtual R_Result execute(ExecutorCtl* exeCtl, Json::Value& root){ return R_Success;};
+    shared_ptr<ExecutorCtl> execCtl;
+    Command(ExecutorCtl* exCtl);
+    virtual R_Result execute(Json::Value& root){ return R_Success;};
 };
 #endif //EXECUTOR_COMMAND_H
