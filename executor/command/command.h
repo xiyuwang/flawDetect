@@ -18,6 +18,7 @@ public:
     unsigned int code;
     shared_ptr<ExecutorCtl> execCtl;
     Command(ExecutorCtl* exCtl);
-    virtual R_Result execute(Json::Value& root){ return R_Success;};
+    ExecutorCtl* getExecutorCtl(){ return execCtl.get();};
+    virtual R_Result execute(Json::Value& root){ return R_SUCCESS;};
 };
 #endif //EXECUTOR_COMMAND_H

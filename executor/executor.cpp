@@ -11,12 +11,12 @@ Executor::Executor(string name)
 R_Result Executor::start()
 {
     this->state = started;
-    return R_Success;
+    return R_SUCCESS;
 }
 R_Result Executor::stop()
 {
     this->state = stoped;
-    return R_Success;
+    return R_SUCCESS;
 }
 eStates Executor::getState()
 {
@@ -25,7 +25,7 @@ eStates Executor::getState()
 R_Result Executor::setState(eStates st)
 {
     this->state = st;
-    return R_Success;
+    return R_SUCCESS;
 }
 
 R_Result Executor::addProduct(shared_ptr<Product> pObj)
@@ -34,12 +34,12 @@ R_Result Executor::addProduct(shared_ptr<Product> pObj)
         productMap.insert(pair<string, shared_ptr<Product>>(pObj->name,pObj));
     }
     catch (exception ex){
-        return R_Fail;
+        return R_FAIL;
     }
-    return R_Success;
+    return R_SUCCESS;
 }
 R_Result Executor::deleteProduct(const string id)
 {
     productMap.erase(id);
-    return R_Success;
+    return R_SUCCESS;
 }

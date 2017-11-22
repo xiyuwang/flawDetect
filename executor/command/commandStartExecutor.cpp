@@ -12,20 +12,19 @@ R_Result CommandStartExecutor::build(Json::Value& root)
 
     if(!jsonRoot.isMember(COMMAND_TAG_NAME) || jsonRoot[COMMAND_TAG_NAME].type() != Json::stringValue)
     {
-        return R_Fail_Executor_Build_Mistake;
+        return R_FAIL_EXEC_BUILD_MISTAKE;
     }
-    extrName = jsonRoot[COMMAND_TAG_NAME].asString();
 
     if(!jsonRoot.isMember(COMMAND_TAG_PROPRODUCTS) || jsonRoot[COMMAND_TAG_PROPRODUCTS].type() != Json::arrayValue)
     {
-        return R_Fail_Executor_Build_Mistake;
+        return R_FAIL_EXEC_BUILD_MISTAKE;
     }
 
     Json::Value jsonProducts = jsonRoot[COMMAND_TAG_PROPRODUCTS];
     for (auto sub= jsonProducts.begin(); sub != jsonProducts.end(); sub++)
     {
         Product* pProd = buildProduct(*sub);
-        if(pProd == NULL)  return R_Fail_Executor_Build_Mistake;
+        if(pProd == NULL)  return R_FAIL_EXEC_BUILD_MISTAKE;
         shared_ptr<Product> apProd(pProd);
         pExecutor->addProduct(apProd);
     }
@@ -99,5 +98,5 @@ R_Result CommandStartExecutor::execute(Json::Value& root)
     Json::Value exName = jsonRoot["name"];
     shared_ptr<Executor> apExec(new Executor(exName.asString()));
     execCtl->getExecutorMap().insert(pair<string,shared_ptr<Executor>>(exName.asString(),apExec));
-    return R_Success;
+    return R_SUCCESS;
 }

@@ -15,7 +15,6 @@ class CommandStartExecutor: public Command
 {
 public:
     Json::Value jsonRoot;
-    string extrName;
     vector<shared_ptr<Product>> productVec;
     CommandStartExecutor(ExecutorCtl* exCtl);
     R_Result build(Json::Value& root);

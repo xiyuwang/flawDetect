@@ -13,14 +13,14 @@ R_Result Product::addProcessor(shared_ptr<Processor> pObj)
         processorMap.insert(pair<string, shared_ptr<Processor>>(pObj->name, pObj));
     }
     catch (exception ex){
-        return R_Fail;
+        return R_FAIL;
     }
-    return R_Success;
+    return R_SUCCESS;
 }
 R_Result Product::deleteProcessor(const string id)
 {
     processorMap.erase(id);
-    return R_Success;
+    return R_SUCCESS;
 }
 R_Result Product::setCamera(shared_ptr<Camera> pCamera)
 {

@@ -10,10 +10,11 @@
 /* the return code definition */
 typedef void (*AL_Handler)(void);
 typedef int R_Result;
-#define R_Success (0)
-#define R_Fail (1)
-#define R_Fail_Executor_State_Mistake (2)
-#define R_Fail_Executor_Build_Mistake (3)
+#define R_SUCCESS (0)
+#define R_FAIL (1)
+#define R_FAIL_EXEC_STAT_MISTAKE (2)
+#define R_FAIL_EXEC_BUILD_MISTAKE (3)
+#define R_FAIL_DEFECT_BUILD_MISTAKE (4)
 
 #define STATIC_CHECK_INTEVAL (100);
 

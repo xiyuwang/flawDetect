@@ -42,7 +42,7 @@ string ExecutorCtl::handleCommand(string command)
     }
     R_Result ret = pCommand->execute(jsonRoot);
 
-    if(ret != R_Success)
+    if(ret != R_SUCCESS)
     {
         return "{\"code\":4}";
     }
@@ -208,5 +208,5 @@ R_Result ExecutorCtl::stopServer()
 #else
     close(serverfd);
 #endif
-    return R_Success;
+    return R_SUCCESS;
 }

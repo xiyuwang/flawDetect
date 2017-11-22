@@ -36,6 +36,7 @@ public:
     R_Result setState(eStates state);
 
     R_Result addProduct(shared_ptr<Product> pObj);
+    map<string, shared_ptr<Product>>& getProductMap(){ return productMap;};
     R_Result deleteProduct(const string id);
 };
 #endif //EXECUTOR_EXECUTOR_H
