@@ -14,6 +14,7 @@ class CommandStartDefect: public Command
 {
 public:
     shared_ptr<Executor> apExec;
+    vector<shared_ptr<Processor> > processorVec;
     CommandStartDefect(ExecutorCtl* exCtl);
     R_Result build(Json::Value& root);
     R_Result execute(Json::Value& root);

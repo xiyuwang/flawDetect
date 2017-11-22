@@ -23,6 +23,7 @@ class Executor
 private:
     string exName;
     map<string, shared_ptr<Product>> productMap;
+    vector<pthread_t> procThreadVec;
     Schedule* pSchedule;
     vector<Frame> frames;
     enum eStates state;
@@ -38,5 +39,7 @@ public:
     R_Result addProduct(shared_ptr<Product> pObj);
     map<string, shared_ptr<Product>>& getProductMap(){ return productMap;};
     R_Result deleteProduct(const string id);
+
+    vector<pthread_t>& getProdThreadVec(){ return procThreadVec;};
 };
 #endif //EXECUTOR_EXECUTOR_H

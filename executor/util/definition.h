@@ -15,6 +15,7 @@ typedef int R_Result;
 #define R_FAIL_EXEC_STAT_MISTAKE (2)
 #define R_FAIL_EXEC_BUILD_MISTAKE (3)
 #define R_FAIL_DEFECT_BUILD_MISTAKE (4)
+#define R_FAIL_DEFECT_START_MISTAKE (5)
 
 #define STATIC_CHECK_INTEVAL (100);
 

@@ -24,6 +24,7 @@ public:
     R_Result setCamera(shared_ptr<Camera> pCamera);
     Camera* getCamera();
     R_Result addProcessor(shared_ptr<Processor> pObj);
+    map<string, shared_ptr<Processor>>& getProcessorMap(){ return processorMap;};
     R_Result deleteProcessor(const string id);
 
 };
