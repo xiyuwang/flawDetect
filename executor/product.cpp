@@ -30,3 +30,7 @@ Camera* Product::getCamera()
 {
     return this->pCam.get();
 }
+R_Result Product::setCamThreadId(const int threadId)
+{
+    camThreadId = threadId;
+}

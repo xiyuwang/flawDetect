@@ -8,3 +8,9 @@ Camera::Camera(string name)
 {
     this->name = name;
 }
+void Camera::run()
+{
+    while(true){
+
+    }
+}

@@ -7,12 +7,18 @@
 
 #include <iostream>
 #include <map>
+#include "util/thread.h"
+
 using namespace std;
 
-class Camera
+class Camera: public Thread
 {
 public:
     string name;
+    string driver;
+    int mode;
+    unsigned  int exposureTime;
     Camera(string name);
+    void run();
 };
 #endif //EXECUTOR_CAMERA_H

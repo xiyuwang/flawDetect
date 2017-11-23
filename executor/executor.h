@@ -14,8 +14,9 @@
 using namespace std;
 
 enum eStates{
-    started=1,
-    stoped
+    stoped=0,
+    execStarted=1,
+    defectStarted=2
 };
 
 class Executor
@@ -31,8 +32,6 @@ public:
     string id;
 public:
     Executor(string name);
-    R_Result start();
-    R_Result stop();
     eStates getState();
     R_Result setState(eStates state);
 

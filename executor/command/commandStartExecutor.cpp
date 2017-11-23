@@ -5,31 +5,34 @@
 #include "commandStartExecutor.h"
 CommandStartExecutor::CommandStartExecutor(ExecutorCtl* exCtl):Command(exCtl)
 {
+
 }
-R_Result CommandStartExecutor::build(Json::Value& root)
+Executor* CommandStartExecutor::build(Json::Value& root)
 {
     jsonRoot.copy(root);
 
-    if(!jsonRoot.isMember(COMMAND_TAG_NAME) || jsonRoot[COMMAND_TAG_NAME].type() != Json::stringValue)
+    if(!root.isMember(COMMAND_TAG_NAME) || root[COMMAND_TAG_NAME].type() != Json::stringValue)
     {
-        return R_FAIL_EXEC_BUILD_MISTAKE;
+        return NULL;
     }
 
-    if(!jsonRoot.isMember(COMMAND_TAG_PROPRODUCTS) || jsonRoot[COMMAND_TAG_PROPRODUCTS].type() != Json::arrayValue)
+    if(!root.isMember(COMMAND_TAG_PROPRODUCTS) || root[COMMAND_TAG_PROPRODUCTS].type() != Json::arrayValue)
     {
-        return R_FAIL_EXEC_BUILD_MISTAKE;
+        return NULL;
     }
 
-    Json::Value jsonProducts = jsonRoot[COMMAND_TAG_PROPRODUCTS];
+    shared_ptr<Executor> apExec(new Executor(root[COMMAND_TAG_NAME].asString()));
+
+    Json::Value jsonProducts = root[COMMAND_TAG_PROPRODUCTS];
     for (auto sub= jsonProducts.begin(); sub != jsonProducts.end(); sub++)
     {
         Product* pProd = buildProduct(*sub);
-        if(pProd == NULL)  return R_FAIL_EXEC_BUILD_MISTAKE;
+        if(pProd == NULL)  return NULL;
         shared_ptr<Product> apProd(pProd);
-        pExecutor->addProduct(apProd);
+        apExec->addProduct(apProd);
     }
 
-
+    return apExec.get();
  //   exeCtl->getExecutorMap().insert(pair<string,Executor*>(extrName,pExtr));
 }
 Product* CommandStartExecutor::buildProduct(Json::Value& product)
@@ -94,9 +97,27 @@ Processor* CommandStartExecutor::buildProcessor(Json::Value& processor)
 }
 R_Result CommandStartExecutor::execute(Json::Value& root)
 {
-    build(root);
-    Json::Value exName = jsonRoot["name"];
-    shared_ptr<Executor> apExec(new Executor(exName.asString()));
+    Executor* pExec = build(root);
+    if(pExec == NULL)
+        return R_FAIL_EXEC_BUILD_MISTAKE;
+
+    Json::Value exName = root["name"];
+    shared_ptr<Executor> apExec(pExec);
+
+    map<string, shared_ptr<Product>> prodMap = apExec->getProductMap();
+    map<string, shared_ptr<Product>>::iterator it;
+    it = prodMap.begin();
+    while(it != prodMap.end())
+    {
+        shared_ptr<Product> apProd = it->second;
+        Camera* pCam = apProd->getCamera();
+        bool bSuccess = pCam->start();
+        if(!bSuccess)
+            return R_FAIL_EXEC_START_MISTAKE;
+        apProd->setCamThreadId(pCam->getThreadID()) ;
+        it ++;
+    }
+
     execCtl->getExecutorMap().insert(pair<string,shared_ptr<Executor>>(exName.asString(),apExec));
     return R_SUCCESS;
 }

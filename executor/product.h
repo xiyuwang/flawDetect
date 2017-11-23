@@ -17,11 +17,13 @@ class Product
 private:
     map<string, shared_ptr<Processor> > processorMap;
     shared_ptr<Camera> pCam;
+    int camThreadId;
 public:
     string name;
 public:
     Product(string proName);
     R_Result setCamera(shared_ptr<Camera> pCamera);
+    R_Result setCamThreadId(const int threadId);
     Camera* getCamera();
     R_Result addProcessor(shared_ptr<Processor> pObj);
     map<string, shared_ptr<Processor>>& getProcessorMap(){ return processorMap;};

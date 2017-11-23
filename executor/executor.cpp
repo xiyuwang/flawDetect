@@ -8,16 +8,6 @@ Executor::Executor(string name)
 {
     exName = name;
 }
-R_Result Executor::start()
-{
-    this->state = started;
-    return R_SUCCESS;
-}
-R_Result Executor::stop()
-{
-    this->state = stoped;
-    return R_SUCCESS;
-}
 eStates Executor::getState()
 {
     return this->state;

@@ -17,10 +17,10 @@ public:
     Json::Value jsonRoot;
     vector<shared_ptr<Product>> productVec;
     CommandStartExecutor(ExecutorCtl* exCtl);
-    R_Result build(Json::Value& root);
+    Executor* build(Json::Value& root);
     R_Result execute(Json::Value& root);
 private:
-    Executor* pExecutor;
+    Executor* pExec;
     Product* buildProduct(Json::Value& product);
     Processor* buildProcessor(Json::Value& processor);
     Camera* buildCamera(Json::Value& camera);
