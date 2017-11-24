@@ -7,7 +7,9 @@
 
 #include <iostream>
 #include <map>
+#include <queue>
 #include "util/thread.h"
+#include "frame.h"
 
 using namespace std;
 
@@ -17,6 +19,7 @@ public:
     string name;
     string driver;
     int mode;
+    queue<Frame> outQueue;
     unsigned  int exposureTime;
     Camera(string name);
     void run();
