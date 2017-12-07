@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.detect.dao.DetectMapper">
+
+    <!-- 查询是否存在改会员等级 -->
+    <select id="selectCamera" parameterType="com.detect.domain.CameraDO"
+            resultType="com.detect.domain.CameraDO">
+        select id,cameraid,exposuretime
+        from tb_camera ca
+
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ca.id=#{id}
+            </if>
+            <if test="cameraid != null and cameraid != '' ">
+                and ca.cameraid=#{cameraid}
+            </if>
+            <if test="exposuretime != null and exposuretime != '' ">
+                and cus.exposuretime = #{exposuretime}
+            </if>
+        </where>
+    </select>
+
+    <!-- 新增会员等级 -->
+    <insert id="insertCamera" parameterType="com.detect.domain.CameraDO">
+        insert into tb_camera(cameraid,exposuretime)
+        values(#{cameraid}, #{exposuretime})
+    </insert>
+
+    <!-- 更新会员等级 -->
+    <update id="updateCamera" parameterType="com.detect.domain.CameraDO">
+        update tb_Camera
+        set exposuretime=#{exposuretime}
+        where cameraid=#{cameraid}
+    </update>
+
+    <!-- 查询是否存在该资产类型 -->
+    <select id="deleteCamera" parameterType="com.detect.domain.CameraDO">
+        delete
+        from tb_Camera
+        where cameraid=#{cameraid}
+    </select>
+
+</mapper>
