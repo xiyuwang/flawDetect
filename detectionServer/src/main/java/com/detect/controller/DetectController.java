@@ -52,8 +52,8 @@ public class DetectController {
         ListVO cameraList = null;
 
         CameraBO cameraBO = new CameraBO();
-        String cameraId = cameraVO.getCameraid();
-        if (cameraId == null || "".equals(cameraId))
+        String camid = cameraVO.getCamid();
+        if (camid == null || "".equals(camid))
         {
             String errorCode = GlobalConstant.RESP_CODE_FAIL_PARAMISTAKE;
             log.error(errorInfo(request.getSession().getId(), ControllerConstant.QUERRY_CAMERA_LIST,
@@ -64,7 +64,7 @@ public class DetectController {
             return resp;
         }
 
-        cameraBO.setCameraid(cameraVO.getCameraid());
+        cameraBO.setCamid(cameraVO.getCamid());
         try{
             cameraList = detectService.selectCamera(cameraBO);
         }catch(Exception e){
@@ -101,7 +101,7 @@ public class DetectController {
         /** TODO: parameter checking **/
 
         CameraBO cameraBO = new CameraBO();
-        cameraBO.setCameraid(cameraVO.getCameraid());
+        cameraBO.setCamid(cameraVO.getCamid());
         cameraBO.setExposuretime(cameraVO.getExposuretime());
         cameraBO.setStatus(cameraVO.getStatus());
 
@@ -147,7 +147,7 @@ public class DetectController {
         /** TODO: parameter checking **/
 
         CameraBO cameraBO = new CameraBO();
-        cameraBO.setCameraid(cameraVO.getCameraid());
+        cameraBO.setCamid(cameraVO.getCamid());
         cameraBO.setExposuretime(cameraVO.getExposuretime());
         cameraBO.setStatus(cameraVO.getStatus());
 
@@ -193,7 +193,7 @@ public class DetectController {
         /** TODO: parameter checking **/
 
         CameraBO cameraBO = new CameraBO();
-        cameraBO.setCameraid(cameraVO.getCameraid());
+        cameraBO.setCamid(cameraVO.getCamid());
         cameraBO.setExposuretime(cameraVO.getExposuretime());
         cameraBO.setStatus(cameraVO.getStatus());
 

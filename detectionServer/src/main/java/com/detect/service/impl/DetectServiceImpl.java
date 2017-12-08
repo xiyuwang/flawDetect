@@ -22,7 +22,7 @@ public class DetectServiceImpl implements DetectService {
     @Override
     public ListVO selectCamera(CameraBO cameraBO){
         CameraDO cameraDo= new CameraDO();
-        cameraDo.setCameraid(cameraBO.getCameraid());
+        cameraDo.setCamid(cameraBO.getCamid());
         cameraDo.setStatus(cameraBO.getStatus());
         cameraDo.setExposuretime(cameraBO.getExposuretime());
 
@@ -42,7 +42,7 @@ public class DetectServiceImpl implements DetectService {
     @Override
     public int insertCamera(CameraBO cameraBO){
         CameraDO cameraDo= new CameraDO();
-        cameraDo.setCameraid(cameraBO.getCameraid());
+        cameraDo.setCamid(cameraBO.getCamid());
 
         boolean bExist = mapper.existCamera(cameraDo);
         if(bExist){
@@ -55,7 +55,7 @@ public class DetectServiceImpl implements DetectService {
     @Override
     public int updateCamera(CameraBO cameraBO){
         CameraDO cameraDo= new CameraDO();
-        cameraDo.setCameraid(cameraBO.getCameraid());
+        cameraDo.setCamid(cameraBO.getCamid());
 
         boolean bExist = mapper.existCamera(cameraDo);
         if(!bExist){
@@ -69,7 +69,7 @@ public class DetectServiceImpl implements DetectService {
     @Override
     public int deleteCamera(CameraBO cameraBO){
         CameraDO cameraDo= new CameraDO();
-        cameraDo.setCameraid(cameraBO.getCameraid());
+        cameraDo.setCamid(cameraBO.getCamid());
 
         boolean bExist = mapper.existCamera(cameraDo);
         if(!bExist){

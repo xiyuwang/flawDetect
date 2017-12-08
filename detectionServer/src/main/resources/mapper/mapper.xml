@@ -4,7 +4,7 @@
 <!--the camera table-->
     <select id="selectCamera" parameterType="com.detect.domain.CameraDO"
             resultType="com.detect.domain.CameraDO">
-        select id,cameraid,exposuretime,status,createtime,updatetime,deprecatetime
+        select id,camid,exposuretime,status,createtime,updatetime,deprecatetime
         from tb_cam ca
 
         <where>
@@ -12,8 +12,8 @@
             <if test="id != null and id != '' ">
                 and ca.id=#{id}
             </if>
-            <if test="cameraid != null and cameraid != '' ">
-                and ca.cameraid=#{cameraid}
+            <if test="camid != null and camid != '' ">
+                and ca.camid=#{camid}
             </if>
             <if test="exposuretime != null and exposuretime != '' ">
                 and ca.exposuretime = #{exposuretime}
@@ -35,7 +35,7 @@
 
     <select id="selectCameraCount" parameterType="com.detect.domain.CameraDO"
             resultType="int">
-        select count(ca.cameraid)
+        select count(ca.camid)
         from tb_cam ca
 
         <where>
@@ -43,8 +43,8 @@
             <if test="id != null and id != '' ">
                 and ca.id=#{id}
             </if>
-            <if test="cameraid != null and cameraid != '' ">
-                and ca.cameraid=#{cameraid}
+            <if test="camid != null and camid != '' ">
+                and ca.camid=#{camid}
             </if>
             <if test="exposuretime != null and exposuretime != '' ">
                 and ca.exposuretime = #{exposuretime}
@@ -66,14 +66,14 @@
 
     <select id="cameraExist" parameterType="com.detect.domain.CameraDO"
             resultType="boolean">
-        SELECT EXISTS(SELECT cameraid FROM tb_cam ca
+        SELECT EXISTS(SELECT camid FROM tb_cam ca
         <where>
             1 = 1
             <if test="id != null and id != '' ">
                 and ca.id=#{id}
             </if>
-            <if test="cameraid != null and cameraid != '' ">
-                and ca.cameraid=#{cameraid}
+            <if test="camid != null and camid != '' ">
+                and ca.camid=#{camid}
             </if>
             <if test="exposuretime != null and exposuretime != '' ">
                 and ca.exposuretime = #{exposuretime}
@@ -95,7 +95,7 @@
     </select>
 
     <insert id="insertCamera" parameterType="com.detect.domain.CameraDO">
-        insert into tb_cam(cameraid,
+        insert into tb_cam(camid,
         <if test="exposuretime != null">
             exposuretime,
         </if>
@@ -103,7 +103,7 @@
             status,
         </if>
         createtime)
-        values(#{cameraid},
+        values(#{camid},
         <if test="exposuretime != null">
             #{exposuretime},
         </if>
@@ -124,16 +124,16 @@
             status = #{status} ,
         </if>
         updatetime=now()
-        where cameraid=#{cameraid}
+        where camid=#{camid}
     </update>
 
     <delete id="deleteCamera" parameterType="com.detect.domain.CameraDO">
         delete
         from tb_cam
-        where cameraid=#{cameraid}
+        where camid=#{camid}
     </delete>
 
-    <!--------------------- the exec table ------------------>
+    <!-- the exec table -->
     <select id="selectExec" parameterType="com.detect.domain.ExecDO"
             resultType="com.detect.domain.ExecDO">
         select id,execid,ctlid,camid,status,createtime,updatetime,deprecatetime
@@ -281,7 +281,7 @@
         where execid=#{execid}
     </delete>
 
-    <!--------------------- the proc table ------------------>
+    <!-- the proc table -->
     <select id="selectProc" parameterType="com.detect.domain.ProcDO"
             resultType="com.detect.domain.ProcDO">
         select id,procid,execid,type,filename,createtime,updatetime,deprecatetime
@@ -435,7 +435,7 @@
         where procid=#{procid}
     </delete>
 
-    <!--------------------- the sch table ------------------>
+    <!-- the sch table -->
     <select id="selectSch" parameterType="com.detect.domain.SchDO"
             resultType="com.detect.domain.SchDO">
         select id,schid,execid,status,stoptime,createtime,updatetime,deprecatetime
@@ -589,7 +589,7 @@
         where schid=#{schid}
     </delete>
 
-    <!--------------------- the ctl table ------------------>
+    <!-- the ctl table -->
     <select id="selectCtl" parameterType="com.detect.domain.CtlDO"
             resultType="com.detect.domain.CtlDO">
         select id,ctlid,execid,type,filename,createtime,updatetime,deprecatetime

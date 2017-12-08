@@ -6,7 +6,7 @@ package com.detect.domain;
 public class CameraBO {
     private static final long serialVersionUID = 5159827367447917221L;
     private String id;
-    private String cameraid;
+    private String camid;
     private int exposuretime;
     private int status;
     private String createtime;
@@ -20,11 +20,11 @@ public class CameraBO {
     public void setId(String id) {
         this.id = id;
     }
-    public String getCameraid() {
-        return cameraid;
+    public String getCamid() {
+        return camid;
     }
-    public void setCameraid(String cameraid) {
-        this.cameraid = cameraid;
+    public void setCamid(String camid) {
+        this.camid = camid;
     }
     public int getExposuretime() {
         return exposuretime;
