@@ -1,18 +1,18 @@
 package com.detect.domain;
 
 /**
- * Created by Administrator on 2017/12/07.
+ * Created by Administrator on 2017/12/08.
  */
-public class CameraVO {
+public class ExecBO {
     private static final long serialVersionUID = 5159827367447917221L;
     private String id;
-    private String cameraid;
-    private int exposuretime;
+    private String execid;
+    private String ctlid;
+    private String camid;
     private int status;
     private String createtime;
     private String updatetime;
     private String deprecatetime;
-
 
     public String getId() {
         return id;
@@ -20,17 +20,23 @@ public class CameraVO {
     public void setId(String id) {
         this.id = id;
     }
-    public String getCameraid() {
-        return cameraid;
+    public String getExecid() {
+        return execid;
     }
-    public void setCameraid(String cameraid) {
-        this.cameraid = cameraid;
+    public void setExecid(String execid) {
+        this.execid = execid;
     }
-    public int getExposuretime() {
-        return exposuretime;
+    public String getCtlid() {
+        return ctlid;
     }
-    public void setExposuretime(int exposuretime) {
-        this.exposuretime = exposuretime;
+    public void setCtlid(String ctlid) {
+        this.ctlid = ctlid;
+    }
+    public String getCamid() {
+        return camid;
+    }
+    public void setCamid(String camid) {
+        this.camid = camid;
     }
     public int getStatus() {
         return status;

@@ -8,6 +8,10 @@ public class CameraDO {
     private String id;
     private String cameraid;
     private int exposuretime;
+    private int status;
+    private String createtime;
+    private String updatetime;
+    private String deprecatetime;
 
 
     public String getId() {
@@ -27,5 +31,29 @@ public class CameraDO {
     }
     public void setExposuretime(int exposuretime) {
         this.exposuretime = exposuretime;
+    }
+    public int getStatus() {
+        return status;
+    }
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    public String getCreatetime() {
+        return createtime;
+    }
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+    public String getUpdatetime() {
+        return updatetime;
+    }
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+    public String getDeprecatetime() {
+        return deprecatetime;
+    }
+    public void setDeprecatetime(String deprecatetime) {
+        this.deprecatetime = deprecatetime;
     }
 }

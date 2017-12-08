@@ -1,14 +1,12 @@
 package com.detect.domain;
 
 /**
- * Created by Administrator on 2017/12/07.
+ * Created by Administrator on 2017/12/08.
  */
-public class CameraVO {
+public class CtlDO {
     private static final long serialVersionUID = 5159827367447917221L;
     private String id;
-    private String cameraid;
-    private int exposuretime;
-    private int status;
+    private String ctlid;
     private String createtime;
     private String updatetime;
     private String deprecatetime;
@@ -20,23 +18,11 @@ public class CameraVO {
     public void setId(String id) {
         this.id = id;
     }
-    public String getCameraid() {
-        return cameraid;
+    public String getCtlid() {
+        return ctlid;
     }
-    public void setCameraid(String cameraid) {
-        this.cameraid = cameraid;
-    }
-    public int getExposuretime() {
-        return exposuretime;
-    }
-    public void setExposuretime(int exposuretime) {
-        this.exposuretime = exposuretime;
-    }
-    public int getStatus() {
-        return status;
-    }
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCtlid(String ctlid) {
+        this.ctlid = ctlid;
     }
     public String getCreatetime() {
         return createtime;

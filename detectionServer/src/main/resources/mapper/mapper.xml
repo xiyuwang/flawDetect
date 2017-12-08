@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.detect.dao.DetectMapper">
-
-    <!-- 查询是否存在改会员等级 -->
+<!--the camera table-->
     <select id="selectCamera" parameterType="com.detect.domain.CameraDO"
             resultType="com.detect.domain.CameraDO">
-        select id,cameraid,exposuretime
-        from tb_camera ca
+        select id,cameraid,exposuretime,status,createtime,updatetime,deprecatetime
+        from tb_cam ca
 
         <where>
             1 = 1
@@ -17,29 +16,678 @@
                 and ca.cameraid=#{cameraid}
             </if>
             <if test="exposuretime != null and exposuretime != '' ">
-                and cus.exposuretime = #{exposuretime}
+                and ca.exposuretime = #{exposuretime}
+            </if>
+            <if test="status != null and status != '' ">
+                and ca.status = #{status}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ca.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ca.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ca.deprecatetime = #{deprecatetime}
             </if>
         </where>
     </select>
 
-    <!-- 新增会员等级 -->
+    <select id="selectCameraCount" parameterType="com.detect.domain.CameraDO"
+            resultType="int">
+        select count(ca.cameraid)
+        from tb_cam ca
+
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ca.id=#{id}
+            </if>
+            <if test="cameraid != null and cameraid != '' ">
+                and ca.cameraid=#{cameraid}
+            </if>
+            <if test="exposuretime != null and exposuretime != '' ">
+                and ca.exposuretime = #{exposuretime}
+            </if>
+            <if test="status != null and status != '' ">
+                and ca.status = #{status}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ca.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ca.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ca.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="cameraExist" parameterType="com.detect.domain.CameraDO"
+            resultType="boolean">
+        SELECT EXISTS(SELECT cameraid FROM tb_cam ca
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ca.id=#{id}
+            </if>
+            <if test="cameraid != null and cameraid != '' ">
+                and ca.cameraid=#{cameraid}
+            </if>
+            <if test="exposuretime != null and exposuretime != '' ">
+                and ca.exposuretime = #{exposuretime}
+            </if>
+            <if test="status != null and status != '' ">
+                and ca.status = #{status}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ca.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ca.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ca.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+        )
+    </select>
+
     <insert id="insertCamera" parameterType="com.detect.domain.CameraDO">
-        insert into tb_camera(cameraid,exposuretime)
-        values(#{cameraid}, #{exposuretime})
+        insert into tb_cam(cameraid,
+        <if test="exposuretime != null">
+            exposuretime,
+        </if>
+        <if test="status != null">
+            status,
+        </if>
+        createtime)
+        values(#{cameraid},
+        <if test="exposuretime != null">
+            #{exposuretime},
+        </if>
+        <if test="status != null">
+            #{status},
+        </if>
+        now())
     </insert>
 
-    <!-- 更新会员等级 -->
     <update id="updateCamera" parameterType="com.detect.domain.CameraDO">
-        update tb_Camera
-        set exposuretime=#{exposuretime}
+        update tb_cam
+        SET
+        <if test="exposuretime!='' and exposuretime!=null">
+            exposuretime = #{exposuretime} ,
+        </if>
+
+        <if test="status!='' and status!=null">
+            status = #{status} ,
+        </if>
+        updatetime=now()
         where cameraid=#{cameraid}
     </update>
 
-    <!-- 查询是否存在该资产类型 -->
-    <select id="deleteCamera" parameterType="com.detect.domain.CameraDO">
+    <delete id="deleteCamera" parameterType="com.detect.domain.CameraDO">
         delete
-        from tb_Camera
+        from tb_cam
         where cameraid=#{cameraid}
+    </delete>
+
+    <!--------------------- the exec table ------------------>
+    <select id="selectExec" parameterType="com.detect.domain.ExecDO"
+            resultType="com.detect.domain.ExecDO">
+        select id,execid,ctlid,camid,status,createtime,updatetime,deprecatetime
+        from tb_exec ex
+
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ex.id=#{id}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and ex.execid=#{execid}
+            </if>
+            <if test="ctlid != null and ctlid != '' ">
+                and ex.ctlid = #{ctlid}
+            </if>
+            <if test="camid != null and camid != '' ">
+                and ex.camid = #{camid}
+            </if>
+            <if test="status != null and status != '' ">
+                and ex.status = #{status}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ex.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ex.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ex.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
     </select>
 
+    <select id="selectExecCount" parameterType="com.detect.domain.ExecDO"
+            resultType="int">
+        select count(ex.execid)
+        from tb_exec ex
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ex.id=#{id}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and ex.execid=#{execid}
+            </if>
+            <if test="ctlid != null and ctlid != '' ">
+                and ex.ctlid = #{ctlid}
+            </if>
+            <if test="camid != null and camid != '' ">
+                and ex.camid = #{camid}
+            </if>
+            <if test="status != null and status != '' ">
+                and ex.status = #{status}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ex.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ex.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ex.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="execExist" parameterType="com.detect.domain.ExecDO"
+            resultType="boolean">
+        SELECT EXISTS(SELECT execid FROM tb_exec ex
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ex.id=#{id}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and ex.execid=#{execid}
+            </if>
+            <if test="ctlid != null and ctlid != '' ">
+                and ex.ctlid = #{ctlid}
+            </if>
+            <if test="camid != null and camid != '' ">
+                and ex.camid = #{camid}
+            </if>
+            <if test="status != null and status != '' ">
+                and ex.status = #{status}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ex.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ex.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ex.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+        )
+    </select>
+
+    <insert id="insertExec" parameterType="com.detect.domain.ExecDO">
+        insert into tb_exec(execid,
+        <if test="ctlid != null">
+            ctlid,
+        </if>
+        <if test="camid != null">
+            camid,
+        </if>
+        <if test="status != null">
+            status,
+        </if>
+        createtime)
+        values(#{execid},
+        <if test="ctlid != null">
+            #{ctlid},
+        </if>
+        <if test="camid != null">
+            #{camid},
+        </if>
+        <if test="status != null">
+            #{status},
+        </if>
+        now())
+    </insert>
+
+    <update id="updateExec" parameterType="com.detect.domain.ExecDO">
+        update tb_exec
+        SET
+        <if test="ctlid!='' and ctlid!=null">
+            ctlid = #{ctlid} ,
+        </if>
+        <if test="camid!='' and camid!=null">
+            camid = #{camid} ,
+        </if>
+        <if test="status!='' and status!=null">
+            status = #{status} ,
+        </if>
+        updatetime=now()
+        where execid=#{execid}
+    </update>
+
+    <delete id="deleteExec" parameterType="com.detect.domain.ExecDO">
+        delete
+        from tb_exec
+        where execid=#{execid}
+    </delete>
+
+    <!--------------------- the proc table ------------------>
+    <select id="selectProc" parameterType="com.detect.domain.ProcDO"
+            resultType="com.detect.domain.ProcDO">
+        select id,procid,execid,type,filename,createtime,updatetime,deprecatetime
+        from tb_proc proc
+
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and proc.id=#{id}
+            </if>
+            <if test="procid != null and procid != '' ">
+                and proc.procid=#{procid}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and proc.execid = #{execid}
+            </if>
+            <if test="type != null and type != '' ">
+                and proc.type = #{type}
+            </if>
+            <if test="filename != null and filename != '' ">
+                and proc.filename = #{filename}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and proc.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and proc.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and proc.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectProcCount" parameterType="com.detect.domain.ProcDO"
+            resultType="int">
+        select count(proc.procid)
+        from tb_proc proc
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and proc.id=#{id}
+            </if>
+            <if test="procid != null and procid != '' ">
+                and proc.procid=#{procid}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and proc.execid = #{execid}
+            </if>
+            <if test="type != null and type != '' ">
+                and proc.type = #{type}
+            </if>
+            <if test="filename != null and filename != '' ">
+                and proc.filename = #{filename}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and proc.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and proc.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and proc.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="procExist" parameterType="com.detect.domain.ProcDO"
+            resultType="boolean">
+        SELECT EXISTS(SELECT procid FROM tb_proc proc
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and proc.id=#{id}
+            </if>
+            <if test="procid != null and procid != '' ">
+                and proc.procid=#{procid}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and proc.execid = #{execid}
+            </if>
+            <if test="type != null and type != '' ">
+                and proc.type = #{type}
+            </if>
+            <if test="filename != null and filename != '' ">
+                and proc.filename = #{filename}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and proc.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and proc.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and proc.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+        )
+    </select>
+
+    <insert id="insertProc" parameterType="com.detect.domain.ProcDO">
+        insert into tb_proc(procid,
+        <if test="procid != null">
+            procid,
+        </if>
+        <if test="execid != null">
+            execid,
+        </if>
+        <if test="type != null">
+            type,
+        </if>
+        <if test="filename != null">
+            filename,
+        </if>
+        createtime)
+        values(#{procid},
+        <if test="procid != null">
+            #{procid},
+        </if>
+        <if test="execid != null">
+            #{execid},
+        </if>
+        <if test="type != null">
+            #{type},
+        </if>
+        <if test="filename != null">
+            #{filename},
+        </if>
+        now())
+    </insert>
+
+    <update id="updateProc" parameterType="com.detect.domain.ProcDO">
+        update tb_proc
+        SET
+        <if test="execid!='' and execid!=null">
+            execid = #{execid} ,
+        </if>
+        <if test="type!='' and type!=null">
+            type = #{type} ,
+        </if>
+        <if test="filename!='' and filename!=null">
+            filename = #{filename} ,
+        </if>
+        updatetime=now()
+        where procid=#{procid}
+    </update>
+
+    <delete id="deleteProc" parameterType="com.detect.domain.ProcDO">
+        delete
+        from tb_proc
+        where procid=#{procid}
+    </delete>
+
+    <!--------------------- the sch table ------------------>
+    <select id="selectSch" parameterType="com.detect.domain.SchDO"
+            resultType="com.detect.domain.SchDO">
+        select id,schid,execid,status,stoptime,createtime,updatetime,deprecatetime
+        from tb_sch sch
+
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and sch.id=#{id}
+            </if>
+            <if test="schid != null and schid != '' ">
+                and sch.schid=#{schid}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and sch.execid = #{execid}
+            </if>
+            <if test="status != null and status != '' ">
+                and sch.status = #{status}
+            </if>
+            <if test="stoptime != null and stoptime != '' ">
+                and sch.stoptime = #{stoptime}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and sch.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and sch.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and sch.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSchCount" parameterType="com.detect.domain.SchDO"
+            resultType="int">
+        select count(sch.schid)
+        from tb_sch sch
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and sch.id=#{id}
+            </if>
+            <if test="schid != null and schid != '' ">
+                and sch.schid=#{schid}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and sch.execid = #{execid}
+            </if>
+            <if test="status != null and status != '' ">
+                and sch.status = #{status}
+            </if>
+            <if test="stoptime != null and stoptime != '' ">
+                and sch.stoptime = #{stoptime}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and sch.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and sch.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and sch.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="schExist" parameterType="com.detect.domain.SchDO"
+            resultType="boolean">
+        SELECT EXISTS(SELECT schid FROM tb_sch sch
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and sch.id=#{id}
+            </if>
+            <if test="schid != null and schid != '' ">
+                and sch.schid=#{schid}
+            </if>
+            <if test="execid != null and execid != '' ">
+                and sch.execid = #{execid}
+            </if>
+            <if test="status != null and status != '' ">
+                and sch.status = #{status}
+            </if>
+            <if test="stoptime != null and stoptime != '' ">
+                and sch.stoptime = #{stoptime}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and sch.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and sch.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and sch.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+        )
+    </select>
+
+    <insert id="insertSch" parameterType="com.detect.domain.SchDO">
+        insert into tb_sch(schid,
+        <if test="schid != null">
+            schid,
+        </if>
+        <if test="execid != null">
+            execid,
+        </if>
+        <if test="status != null">
+            status,
+        </if>
+        <if test="stoptime != null">
+            stoptime,
+        </if>
+        createtime)
+        values(#{schid},
+        <if test="schid != null">
+            #{schid},
+        </if>
+        <if test="execid != null">
+            #{execid},
+        </if>
+        <if test="status != null">
+            #{status},
+        </if>
+        <if test="stoptime != null">
+            #{stoptime},
+        </if>
+        now())
+    </insert>
+
+    <update id="updateSch" parameterType="com.detect.domain.SchDO">
+        update tb_sch
+        SET
+        <if test="execid!='' and execid!=null">
+            execid = #{execid} ,
+        </if>
+        <if test="stoptime!='' and stoptime!=null">
+            stoptime = #{stoptime} ,
+        </if>
+        <if test="status!='' and status!=null">
+            status = #{status} ,
+        </if>
+        updatetime=now()
+        where schid=#{schid}
+    </update>
+
+    <delete id="deleteSch" parameterType="com.detect.domain.SchDO">
+        delete
+        from tb_sch
+        where schid=#{schid}
+    </delete>
+
+    <!--------------------- the ctl table ------------------>
+    <select id="selectCtl" parameterType="com.detect.domain.CtlDO"
+            resultType="com.detect.domain.CtlDO">
+        select id,ctlid,execid,type,filename,createtime,updatetime,deprecatetime
+        from tb_ctl ctl
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ctl.id=#{id}
+            </if>
+            <if test="ctlid != null and ctlid != '' ">
+                and ctl.ctlid=#{ctlid}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ctl.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ctl.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ctl.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCtlCount" parameterType="com.detect.domain.CtlDO"
+            resultType="int">
+        select count(ctl.ctlid)
+        from tb_ctl ctl
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ctl.id=#{id}
+            </if>
+            <if test="ctlid != null and ctlid != '' ">
+                and ctl.ctlid=#{ctlid}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ctl.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ctl.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ctl.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+    </select>
+
+    <select id="ctlExist" parameterType="com.detect.domain.CtlDO"
+            resultType="boolean">
+        SELECT EXISTS(SELECT ctlid FROM tb_ctl ctl
+        <where>
+            1 = 1
+            <if test="id != null and id != '' ">
+                and ctl.id=#{id}
+            </if>
+            <if test="ctlid != null and ctlid != '' ">
+                and ctl.ctlid=#{ctlid}
+            </if>
+            <if test="createtime != null and createtime != '' ">
+                and ctl.createtime = #{createtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                and ctl.updatetime = #{updatetime}
+            </if>
+            <if test="deprecatetime != null and deprecatetime != '' ">
+                and ctl.deprecatetime = #{deprecatetime}
+            </if>
+        </where>
+        )
+    </select>
+
+    <insert id="insertCtl" parameterType="com.detect.domain.CtlDO">
+        insert into tb_ctl(ctlid,
+        <if test="ctlid != null">
+            ctlid,
+        </if>
+        createtime)
+        values(#{ctlid},
+        <if test="ctlid != null">
+            #{ctlid},
+        </if>
+        now())
+    </insert>
+
+    <update id="updateCtl" parameterType="com.detect.domain.CtlDO">
+        update tb_ctl
+        SET
+        <if test="ctlid!='' and ctlid!=null">
+            ctlid = #{ctlid} ,
+        </if>
+        updatetime=now()
+        where ctlid=#{ctlid}
+    </update>
+
+    <delete id="deleteCtl" parameterType="com.detect.domain.CtlDO">
+        delete
+        from tb_ctl
+        where ctlid=#{ctlid}
+    </delete>
 </mapper>
