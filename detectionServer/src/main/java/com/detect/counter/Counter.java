@@ -174,4 +174,21 @@ public class Counter {
         cnt_deleteSchSucc++;
     }
 
+    /** start/stop operation **/
+    public static Integer cnt_startExec = 0;
+    public static Integer cnt_startExecSucc = 0;
+    public static Integer cnt_stopExec = 0;
+    public static Integer cnt_stopExecSucc = 0;
+    public static void incStartExec() {
+        cnt_startExec++;
+    }
+    public static void incStartExecSucc() {
+        cnt_startExecSucc++;
+    }
+    public static void incStopExec() {
+        cnt_stopExec++;
+    }
+    public static void incStopExecSucc() {
+        cnt_stopExecSucc++;
+    }
 }

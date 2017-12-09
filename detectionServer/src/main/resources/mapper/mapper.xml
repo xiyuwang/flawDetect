@@ -201,7 +201,7 @@
         </where>
     </select>
 
-    <select id="execExist" parameterType="com.detect.domain.ExecDO"
+    <select id="existExec" parameterType="com.detect.domain.ExecDO"
             resultType="boolean">
         SELECT EXISTS(SELECT execid FROM tb_exec ex
         <where>

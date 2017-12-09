@@ -14,13 +14,13 @@ public class ListVO {
 	//数据集合
 	private List<Object> data;
 	
-	private List<String> cardIds;
+	private List<String> ids;
 	
-	public List<String> getCardIds() {
-		return cardIds;
+	public List<String> getIds() {
+		return ids;
 	}
-	public void setCardIds(List<String> cardIds) {
-		this.cardIds = cardIds;
+	public void setIds(List<String> ids) {
+		this.ids = ids;
 	}
 	public Integer getPage() {
 		return page;

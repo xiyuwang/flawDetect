@@ -26,5 +26,9 @@ public class ControllerConstant {
     public static String INSERT_SCH = "insertSch";
     public static String UPDATE_SCH = "updateSch";
     public static String REMOVE_SCH = "removeSch";
+    public static String START_EXEC = "start";
+    public static String STOP_EXEC = "stop";
 
+    /*** operations ***/
+    public static int EXECUTOR_INIT_TIME = 1000;
 }

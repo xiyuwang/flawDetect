@@ -11,8 +11,10 @@ public class GlobalConstant {
     public static int ERR_CTL_UPDATEDATA = 3;
     public static int ERR_CTL_DELETEDATA = 4;
     public static int ERR_CTL_PARAMISTAKE = 5;
-    public static int ERR_SRV_DATAEXIST = 6;
-    public static int ERR_SRV_NODATA = 7;
+    public static int ERR_CTL_NODATA = 6;
+    public static int ERR_CTL_TIMEOUT = 7;
+    public static int ERR_SRV_DATAEXIST = 8;
+    public static int ERR_SRV_NODATA = 9;
 
 
     /** response code **/
@@ -22,6 +24,8 @@ public class GlobalConstant {
     public static String RESP_CODE_FAIL_UPDATEDATA = String.valueOf(ERR_CTL_UPDATEDATA);
     public static String RESP_CODE_FAIL_DELETEDATA = String.valueOf(ERR_CTL_DELETEDATA);
     public static String RESP_CODE_FAIL_PARAMISTAKE = String.valueOf(ERR_CTL_PARAMISTAKE);
+    public static String RESP_CODE_FAIL_CTL_NODATA = String.valueOf(ERR_CTL_NODATA);
+    public static String RESP_CODE_FAIL_CTL_TIMEOUT = String.valueOf(ERR_CTL_TIMEOUT);
     public static String RESP_CODE_FAIL_SRV_DATAEXIST = String.valueOf(ERR_SRV_DATAEXIST);
     public static String RESP_CODE_FAIL_SRV_NODATA = String.valueOf(ERR_SRV_NODATA);
 

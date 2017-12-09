@@ -203,6 +203,13 @@ public class DetectServiceImpl implements DetectService {
         execDo.setStatus(execBO.getStatus());
         return mapper.deleteExec(execDo);
     }
+    @Override
+    public boolean existExec(ExecBO execBO){
+        ExecDO execDo= new ExecDO();
+        execDo.setExecid(execBO.getExecid());
+
+        return mapper.existExec(execDo);
+    }
 
     @Override
     public ListVO selectProc(ProcBO procBO){

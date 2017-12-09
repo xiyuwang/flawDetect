@@ -25,6 +25,7 @@ public interface DetectService {
     int insertExec(ExecBO execBO);
     int updateExec(ExecBO execBO);
     int deleteExec(ExecBO execBO);
+    boolean existExec(ExecBO execBO);
 
     /** proc operation**/
     ListVO selectProc(ProcBO procBO);
