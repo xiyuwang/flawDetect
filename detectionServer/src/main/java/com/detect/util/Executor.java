@@ -4,8 +4,10 @@ import com.detect.domain.*;
 import com.detect.service.DetectService;
 import java.lang.Thread;
 import java.util.List;
-import java.util.LinkedList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Queue;
+import java.util.LinkedList;
 
 import org.bytedeco.javacpp.opencv_core;
 import org.slf4j.Logger;
@@ -30,11 +32,16 @@ public class Executor extends Thread {
     private static final Logger log = LoggerFactory.getLogger(Executor.class);
     private volatile boolean exit = false;
     private volatile int initStep;
-    public final static int INIT_FINAL_STEP = 3;
+    public final static int INIT_FINAL_STEP = 4;
     private String execid;
     private String camid;
     private List<Object> procDOList;
-    private volatile Queue<Frame> camQue = new LinkedList<Frame>();
+    private Map<String, Processor> procMap = new HashMap<String,Processor>();
+    private Grabber grabber;
+    private volatile Queue<TagFrame> camQue = new LinkedList<TagFrame>();
+
+    @Autowired
+    DetectService detectService;
 
     public void setExit(boolean exit){
         this.exit = exit;
@@ -57,9 +64,41 @@ public class Executor extends Thread {
     public String getCamid(){
         return camid;
     }
-    @Autowired
-    DetectService detectService;
 
+    private void setProcs(){
+        ProcBO procBO = new ProcBO();
+        procBO.setExecid(execid);
+        ListVO procList = detectService.selectProc(procBO);
+        procDOList = procList.getData();
+        Processor prePro = null;
+        int idx = 0;
+        for (Object ob:procDOList){
+            ProcDO procDO = (ProcDO) ob;
+            int type = procDO.getType();
+            String fileName = procDO.getFilename();
+            String procId = procDO.getProcid();
+            Processor pro = new Processor();
+            pro.setProcid(procId);
+            pro.setFilename(fileName);
+            pro.setType(type);
+            pro.setExit(false);
+            if(idx==0){
+                pro.setInputQue(camQue);
+            }
+            else {
+                pro.setInputQue(prePro.getOutputQue());
+            }
+
+            if(idx >= procDOList.size()-1){
+                pro.setIgnoreOutput(true);
+            }
+            pro.start();
+            prePro = pro;
+            procMap.put(pro.getProcid(), pro);
+            idx ++;
+        }
+
+    }
     private void init() throws Exception {
         /** get exec**/
         ExecBO execBO = new ExecBO();
@@ -75,13 +114,20 @@ public class Executor extends Thread {
         ListVO cameraList = detectService.selectCamera(cameraBO);
         initStep =2;
 
-        /** get proc list **/
-        ProcBO procBO = new ProcBO();
-        procBO.setExecid(execid);
-        ListVO procList = detectService.selectProc(procBO);
-        procDOList = procList.getData();
+        /** start grabber **/
+        grabber =new Grabber();
+        grabber.start();
         initStep =3;
 
+        /** get proc list **/
+        setProcs();
+        initStep =4;
+    }
+    public void stopProcs() throws Exception{
+        for (Processor proc:procMap.values() ) {
+            proc.setExit(true);
+        }
+        procMap.clear();
     }
     @Override
     public void run() {
@@ -91,12 +137,15 @@ public class Executor extends Thread {
         }catch(Exception e){
             return;
         }
-
         /** grab image**/
         //OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
         //grabber.start();
-
         while (!exit) {
+            TagFrame frame = grabber.grab();
+            if(frame == null){
+                continue;
+            }
+            camQue.offer(frame);
             //log.info("thread:" + Thread.currentThread().getName() + " "+((CameraDO)(cameraList.getData().get(0))).getCamid()+" running.....");
             log.info("thread:" + Thread.currentThread().getName() + " "+((ProcDO)(procDOList.get(0))).getExecid()+" running.....");
             try {

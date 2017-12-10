@@ -284,7 +284,7 @@
     <!-- the proc table -->
     <select id="selectProc" parameterType="com.detect.domain.ProcDO"
             resultType="com.detect.domain.ProcDO">
-        select id,procid,execid,type,filename,createtime,updatetime,deprecatetime
+        select id,procid,execid,type,idx,filename,createtime,updatetime,deprecatetime
         from tb_proc proc
 
         <where>
@@ -301,6 +301,9 @@
             <if test="type != null and type != '' ">
                 and proc.type = #{type}
             </if>
+            <if test="idx != null and idx != '' ">
+                and proc.idx = #{idx}
+            </if>
             <if test="filename != null and filename != '' ">
                 and proc.filename = #{filename}
             </if>
@@ -313,6 +316,7 @@
             <if test="deprecatetime != null and deprecatetime != '' ">
                 and proc.deprecatetime = #{deprecatetime}
             </if>
+            ORDER BY idx
         </where>
     </select>
 
@@ -333,6 +337,9 @@
             </if>
             <if test="type != null and type != '' ">
                 and proc.type = #{type}
+            </if>
+            <if test="idx != null and idx != '' ">
+                and proc.idx = #{idx}
             </if>
             <if test="filename != null and filename != '' ">
                 and proc.filename = #{filename}
@@ -366,6 +373,9 @@
             <if test="type != null and type != '' ">
                 and proc.type = #{type}
             </if>
+            <if test="idx != null and idx != '' ">
+                and proc.idx = #{idx}
+            </if>
             <if test="filename != null and filename != '' ">
                 and proc.filename = #{filename}
             </if>
@@ -393,6 +403,9 @@
         <if test="type != null">
             type,
         </if>
+        <if test="idx != null">
+            idx,
+        </if>
         <if test="filename != null">
             filename,
         </if>
@@ -406,6 +419,9 @@
         </if>
         <if test="type != null">
             #{type},
+        </if>
+        <if test="idx != null">
+            #{idx},
         </if>
         <if test="filename != null">
             #{filename},
@@ -421,6 +437,9 @@
         </if>
         <if test="type!='' and type!=null">
             type = #{type} ,
+        </if>
+        <if test="idx!='' and idx!=null">
+            idx = #{idx} ,
         </if>
         <if test="filename!='' and filename!=null">
             filename = #{filename} ,

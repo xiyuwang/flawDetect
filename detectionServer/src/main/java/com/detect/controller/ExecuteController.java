@@ -13,6 +13,7 @@ import com.detect.service.DetectService;
 import com.detect.util.ApplicationContextProvider;
 import com.detect.util.Executor;
 import com.detect.util.JsonUtil;
+import org.bytedeco.javacv.FrameGrabber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,17 @@ public class ExecuteController {
         }
 
         Executor exec=   execMap.get(execid);
+        try{
+            exec.stopProcs();
+        }catch(Exception e){
+            String errorCode = GlobalConstant.RESP_CODE_FAIL_CTL_MISTAKE;
+            log.error(errorInfo(request.getSession().getId(), GlobalConstant.RESP_CODE_FAIL_CTL_MISTAKE,
+                    errorCode, ""));
+            resp.setSuccess(GlobalConstant.RESP_FAIL);
+            resp.setCode(errorCode);
+            resp.setMessage(GlobalConstant.RESP_CODE_FAIL_CTL_MISTAKE);
+            return resp;
+        }
         exec.setExit(true);
         execMap.remove(execid);
 

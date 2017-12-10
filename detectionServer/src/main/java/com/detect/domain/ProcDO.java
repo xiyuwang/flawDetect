@@ -9,6 +9,7 @@ public class ProcDO {
     private String procid;
     private String execid;
     private int type;
+    private int idx;
     private String filename;
     private String createtime;
     private String updatetime;
@@ -37,6 +38,12 @@ public class ProcDO {
     }
     public void setType(int type) {
         this.type = type;
+    }
+    public int getIdx() {
+        return idx;
+    }
+    public void setIdx(int idx) {
+        this.idx = idx;
     }
     public String getFilename() {
         return filename;

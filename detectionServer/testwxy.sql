@@ -70,6 +70,7 @@ CREATE TABLE `tb_proc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `procid` char(18) COLLATE utf8_unicode_ci NOT NULL,
   `execid` char(18) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `index` tinyint(3) DEFAULT NULL,
   `type` tinyint(3) DEFAULT NULL,
   `filename` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
