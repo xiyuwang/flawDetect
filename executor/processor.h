@@ -15,6 +15,7 @@ class Processor: public Thread
 {
 private:
     Algorithm* pAlgorithm;
+    int seq;
 public:
     string name;
     Processor(string procName);

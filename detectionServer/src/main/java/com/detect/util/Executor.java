@@ -116,7 +116,7 @@ public class Executor extends Thread {
 
         /** start grabber **/
         grabber =new Grabber();
-        grabber.start();
+        if(Grabber.RETURN_OK != grabber.start()) return;
         initStep =3;
 
         /** get proc list **/
@@ -137,6 +137,9 @@ public class Executor extends Thread {
         }catch(Exception e){
             return;
         }
+
+        if(INIT_FINAL_STEP != initStep) return;
+
         /** grab image**/
         //OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
         //grabber.start();
