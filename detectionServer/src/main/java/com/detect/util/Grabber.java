@@ -1,8 +1,12 @@
 package com.detect.util;
 
 import com.detect.driver.MeVcl;
-import org.bytedeco.javacpp.opencv_core;
+import org.bytedeco.javacpp.opencv_core.Mat;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.Java2DFrameConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.awt.image.BufferedImage;
 
 /**
  * Created by wxy on 2017/12/9.
@@ -38,9 +42,12 @@ public class Grabber {
     }
     public TagFrame grab(){
         status = STATUA_GRABBING;
-        opencv_core.Mat mat = new opencv_core.Mat();
+        Frame frame = new Frame();
+        Java2DFrameConverter converter = new Java2DFrameConverter();
+        BufferedImage bi = converter.getBufferedImage(f);
+
         byte[] raw_data = meVcl.grab();
-        //mat.put(0, 0, raw_data);
-        return  new TagFrame(mat,idx++);
+        mat.put(0, 0, raw_data);
+        return  new TagFrame(frame,idx++);
     }
 }
