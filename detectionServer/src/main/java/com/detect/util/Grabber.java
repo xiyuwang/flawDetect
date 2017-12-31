@@ -1,10 +1,19 @@
 package com.detect.util;
 
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import org.bytedeco.javacpp.BytePointer;
+import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.javacpp.IntPointer;
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.javacpp.PointerPointer;
+
 import com.detect.driver.MeVcl;
 import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.bytedeco.javacpp.BytePointer;
 
 import java.awt.image.BufferedImage;
 
@@ -43,11 +52,14 @@ public class Grabber {
     public TagFrame grab(){
         status = STATUA_GRABBING;
         Frame frame = new Frame();
-        Java2DFrameConverter converter = new Java2DFrameConverter();
-        BufferedImage bi = converter.getBufferedImage(f);
+        //Java2DFrameConverter converter = new Java2DFrameConverter();
+        //BufferedImage bi = converter.getBufferedImage(f);
 
         byte[] raw_data = meVcl.grab();
-        mat.put(0, 0, raw_data);
+        BytePointer p = new BytePointer(raw_data);
+        ByteBuffer b   = p.asBuffer();
+        frame.samples[0] = b;
+        //mat.put(0, 0, raw_data);
         return  new TagFrame(frame,idx++);
     }
 }
